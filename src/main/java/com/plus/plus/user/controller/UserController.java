@@ -10,6 +10,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,11 @@ public class UserController {
       return ResponseEntity.status(be.getStatus())
           .body(new CommonResponseDto(be.getMessage(), be.getStatus()));
     }
+  }
+
+  @ExceptionHandler({MethodArgumentNotValidException.class})
+  protected ResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    return new ResponseEntity<>(e.getBindingResult().getFieldErrors().get(0).getDefaultMessage() ,HttpStatus.BAD_REQUEST);
   }
 
 }
