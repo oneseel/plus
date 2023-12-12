@@ -1,5 +1,9 @@
 package com.plus.plus.user.service;
 
+import com.plus.plus.global.common.BusinessException;
+import com.plus.plus.global.user.AlreadyExistUserException;
+import com.plus.plus.global.user.PasswordContainsUsernameException;
+import com.plus.plus.global.user.PasswordMismatchException;
 import com.plus.plus.user.dto.UserRequestDto;
 import com.plus.plus.user.entity.User;
 import com.plus.plus.user.repository.UserRepository;
@@ -25,21 +29,22 @@ public class UserService {
 
     // 비밀번호와 비밀번호 확인이 일치하지 않는 경우
     if (!Objects.equals(password, checkPassword)) {
-      throw new IllegalArgumentException("회원가입 실패 - 비밀번호와 비밀번호 확인이 불일치 합니다.");
+      throw new PasswordMismatchException();
     }
 
     // 비밀번호에 닉네임과 같은 값이 포함된 경우
     if (username.contains(password)) {
-      throw new IllegalArgumentException("회원가입 실패 - 비밀번호에 닉네임과 같은 값이 포함되었습니다.");
+      throw new PasswordContainsUsernameException();
     }
     String encodePassword = passwordEncoder.encode(password);
 
     // 유저의 중복유무
     if (userRepository.findByUsername(username).isPresent()) {
-      throw new IllegalArgumentException("회원가입 실패 - 중복된 유저네임입니다.");
+      throw new AlreadyExistUserException();
     }
 
     User user = new User(username, encodePassword);
     userRepository.save(user);
+
   }
 }
