@@ -37,9 +37,4 @@ public class UserController {
     }
   }
 
-  @ExceptionHandler({MethodArgumentNotValidException.class})
-  protected ResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-    return new ResponseEntity<>(e.getBindingResult().getFieldErrors().get(0).getDefaultMessage() ,HttpStatus.BAD_REQUEST);
-  }
-
 }
