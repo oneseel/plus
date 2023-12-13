@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 
 @Getter
-public class UserRequestDto {
+public class UserSignupRequestDto {
 
   @Pattern(regexp = "^[a-zA-Z0-9]{3,10}$",
       message = "유저네임은 알파벳 소문자와 대문자, 숫자만 입력가능합니다. 글자수는 3글자 이상 10글자 이하이어야 입니다. ")

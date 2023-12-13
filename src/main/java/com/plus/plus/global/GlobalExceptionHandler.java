@@ -13,7 +13,8 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException e) {
-    return ResponseEntity.badRequest().body(e.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
+    return ResponseEntity.badRequest()
+        .body(e.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
   }
 
 }

@@ -1,4 +1,4 @@
-package com.plus.plus.global.common;
+package com.plus.plus.global.exception.common;
 
 import java.util.List;
 import lombok.Builder;
