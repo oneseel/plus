@@ -3,7 +3,6 @@ package com.plus.plus.global.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plus.plus.common.CommonResponseDto;
 import com.plus.plus.user.UserDetailsService;
-import com.plus.plus.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -43,7 +42,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         // 인증 정보에 유저정보(username) 넣기
         // username -> user 조회
         String username = info.getSubject();
-        log.info(username);
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
         // userDetails에 저장

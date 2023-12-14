@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -59,12 +58,12 @@ public class JwtUtil {
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token);
       return true;
     } catch (SecurityException | MalformedJwtException | SignatureException e) {
-      throw new InvalidJwtSignatureException(e);
-    } catch (ExpiredJwtException e) {
+      throw new InvalidJwtSignatureException(e); // 유효하지 않는 JWT 서명 입니다.
+    } catch (ExpiredJwtException e) { // 만료된 JWT token 입니다.
       throw new ExpiredJwtTokenException(e);
-    } catch (UnsupportedJwtException e) {
+    } catch (UnsupportedJwtException e) { // 지원되지 않는 JWT 토큰 입니다.
       throw new UnsupportedJwtTokenException(e);
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException e) { // 잘못된 JWT 토큰 입니다.
       throw new InvalidJwtTokenException(e);
     }
   }

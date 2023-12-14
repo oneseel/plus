@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plus.plus.global.jwt.JwtAuthorizationFilter;
 import com.plus.plus.global.jwt.JwtUtil;
 import com.plus.plus.user.UserDetailsService;
-import com.plus.plus.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

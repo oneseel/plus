@@ -6,7 +6,6 @@ import com.plus.plus.global.jwt.JwtUtil;
 import com.plus.plus.user.dto.UserLoginRequestDto;
 import com.plus.plus.user.dto.UserSignupRequestDto;
 import com.plus.plus.user.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
