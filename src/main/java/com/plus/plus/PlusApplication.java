@@ -2,12 +2,14 @@ package com.plus.plus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootApplication
+@EnableJpaAuditing
+@SpringBootApplication // (exclude = SecurityAutoConfiguration.class) 시큐리티 비활성
 public class PlusApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PlusApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(PlusApplication.class, args);
+  }
 
 }
