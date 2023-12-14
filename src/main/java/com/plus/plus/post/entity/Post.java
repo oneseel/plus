@@ -1,4 +1,4 @@
-package com.plus.plus.user.entity;
+package com.plus.plus.post.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,21 +16,16 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 
-@Entity(name = "users")
-public class User {
+@Entity(name = "posts")
+public class Post {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false)
-  private String username;
+  private String title;
 
   @Column(nullable = false)
-  private String password;
-
-  public User(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
+  private String contents;
 }
