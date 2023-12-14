@@ -48,7 +48,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         UserDetails userDetails = userDetailsService.getUserDetails(username);
 
         // authentication의 principal에 저장
-        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+            userDetails, null, userDetails.getAuthorities());
 
         // 저장한 내용을 securityContent에 저장
         context.setAuthentication(authentication);
@@ -64,6 +65,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write(objectMapper.writeValueAsString(commonResponseDto));
+        return;
       }
     }
     filterChain.doFilter(request, response);
