@@ -6,8 +6,7 @@ import com.plus.plus.post.dto.PostResponseDto;
 import com.plus.plus.post.entity.Post;
 import com.plus.plus.post.repository.PostRepository;
 import com.plus.plus.user.entity.User;
-import java.util.Optional;
-import javax.swing.text.html.Option;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,12 @@ public class PostService {
     Post post = getPost(postId);
     return new PostResponseDto(post);
   }
+
+  public List<PostResponseDto> getPosts() {
+    return postRepository.findAllByOrderByCreatedDateDesc()
+        .stream().map(PostResponseDto::new).toList();
+  }
+
 
 
   // postId에 해당하는 게시글을 가지고 오는 메서드

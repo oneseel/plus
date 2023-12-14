@@ -8,6 +8,7 @@ import com.plus.plus.post.service.PostService;
 import com.plus.plus.user.UserDetailsImpl;
 import com.plus.plus.user.entity.User;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,7 @@ public class PostController {
 
   // 게시글 단건 조회
   @GetMapping("{postId}")
-  public ResponseEntity<?> getPost(@PathVariable Long postId,
-      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+  public ResponseEntity<?> getPost(@PathVariable Long postId) {
 
     try {
       PostResponseDto responseDto = postService.getUser(postId);
@@ -51,10 +51,15 @@ public class PostController {
     }
   }
 
-
   // 게시글 전체 조회
+  @GetMapping
+  public ResponseEntity<List<PostResponseDto>> getPosts() {
+    List<PostResponseDto> responseDto = postService.getPosts();
+    return ResponseEntity.ok(responseDto);
+  }
 
   // 게시글 수정
 
   // 게시글 삭제
+
 }
