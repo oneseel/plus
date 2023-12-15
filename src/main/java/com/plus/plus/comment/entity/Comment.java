@@ -1,6 +1,7 @@
 package com.plus.plus.comment.entity;
 
 import com.plus.plus.comment.dto.CommentRequestDto;
+import com.plus.plus.comment.dto.CommentUpdateRequestDto;
 import com.plus.plus.common.Timestamped;
 import com.plus.plus.post.entity.Post;
 import com.plus.plus.user.entity.User;
@@ -47,5 +48,9 @@ public class Comment extends Timestamped {
     this.author = loginuser.getUsername();
     this.user = loginuser;
     this.post = post;
+  }
+
+  public void update(CommentUpdateRequestDto requestDto) {
+    this.content = requestDto.getContent();
   }
 }
