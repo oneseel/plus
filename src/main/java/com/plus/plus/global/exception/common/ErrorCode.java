@@ -1,5 +1,6 @@
 package com.plus.plus.global.exception.common;
 
+import com.plus.plus.global.exception.comment.CommentNotFoundException;
 import lombok.Getter;
 
 @Getter
@@ -19,7 +20,10 @@ public enum ErrorCode {
   AUTHENTICATION_MISMATCH_EXCEPTION(401, "수정 및 삭제 권한이 없습니다."),
 
   // post
-  POST_NOT_FOUND_EXCEPTION(401, "존재하지 않는 게시글입니다.");
+  POST_NOT_FOUND_EXCEPTION(401, "존재하지 않는 게시글입니다."),
+
+  // comment
+  COMMENT_NOT_FOUND_EXCEPTION(401, "존재하지 않는 댓글입니다.");
 
   private final int status;
 

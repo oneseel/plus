@@ -55,7 +55,7 @@ public class PostService {
   }
 
   // postId에 해당하는 게시글을 가지고 오는 메서드
-  private Post getPost(Long postId) {
+  public Post getPost(Long postId) {
     return postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
   }
 
