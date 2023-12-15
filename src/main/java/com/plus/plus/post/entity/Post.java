@@ -1,5 +1,6 @@
 package com.plus.plus.post.entity;
 
+import com.plus.plus.comment.entity.Comment;
 import com.plus.plus.common.Timestamped;
 import com.plus.plus.post.dto.PostRequestDto;
 import com.plus.plus.post.dto.PostUpdateRequestDto;
@@ -11,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +43,9 @@ public class Post extends Timestamped {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
+
+  @OneToMany(mappedBy = "post")
+  private List<Comment> comments;
 
   public Post(User loginUser,PostRequestDto requestDto) {
     this.title = requestDto.getTitle();
