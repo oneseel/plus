@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,5 +81,21 @@ public class CommentController {
   }
 
   // 댓글 삭제
+  @DeleteMapping("/{commentId}")
+  public ResponseEntity<?> deleteComment(
+      @AuthenticationPrincipal UserDetailsImpl userDetails,
+      @PathVariable Long postId, @PathVariable Long commentId) {
 
+    User loginUser = userDetails.getUser();
+
+    try {
+      commentService.deleteComment(loginUser, postId, commentId);
+      return ResponseEntity.ok()
+          .body(new CommonResponseDto("삭제 완료", HttpStatus.OK.value()));
+    } catch (BusinessException be) {
+      return ResponseEntity.status(be.getStatus())
+          .body(new CommonResponseDto(be.getMessage(), be.getStatus()));
+    }
+  }
 }
+

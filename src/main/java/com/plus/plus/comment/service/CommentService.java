@@ -6,9 +6,7 @@ import com.plus.plus.comment.dto.CommentUpdateRequestDto;
 import com.plus.plus.comment.entity.Comment;
 import com.plus.plus.comment.repository.CommentRepository;
 import com.plus.plus.global.exception.comment.CommentNotFoundException;
-import com.plus.plus.global.exception.post.PostNotFoundException;
 import com.plus.plus.global.exception.user.AuthenticationMismatchException;
-import com.plus.plus.post.dto.PostResponseDto;
 import com.plus.plus.post.entity.Post;
 import com.plus.plus.post.service.PostService;
 import com.plus.plus.user.entity.User;
@@ -27,7 +25,8 @@ public class CommentService {
   private final PostService postService;
 
   @Transactional
-  public CommentResponseDto createComment(User loginuser, CommentRequestDto requestDto, Long postId) {
+  public CommentResponseDto createComment(User loginuser, CommentRequestDto requestDto,
+      Long postId) {
 
     Post post = postService.getPost(postId);
     Comment comment = new Comment(loginuser, requestDto, post);
@@ -41,15 +40,27 @@ public class CommentService {
   }
 
   @Transactional
-  public CommentResponseDto updateComment(User loginUser, CommentUpdateRequestDto requestDto, Long postId, Long commentId) {
+  public CommentResponseDto updateComment(
+      User loginUser, CommentUpdateRequestDto requestDto, Long postId, Long commentId) {
 
     postService.getPost(postId);
     Comment comment = commentRepository.findById(commentId)
         .orElseThrow(CommentNotFoundException::new);
-    getUser(loginUser,comment);
+    getUser(loginUser, comment);
 
     comment.update(requestDto);
     return new CommentResponseDto(comment);
+  }
+
+  @Transactional
+  public void deleteComment(User loginUser, Long postId, Long commentId) {
+
+    postService.getPost(postId);
+    Comment comment = commentRepository.findById(commentId)
+        .orElseThrow(CommentNotFoundException::new);
+    getUser(loginUser, comment);
+
+    commentRepository.delete(comment);
   }
 
   // 로그인 한 유저와 작성자가 일치하는지 확인하는 메서드
@@ -58,4 +69,6 @@ public class CommentService {
       throw new AuthenticationMismatchException();
     }
   }
+
+
 }
