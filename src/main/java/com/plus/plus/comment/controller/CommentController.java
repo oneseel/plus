@@ -8,10 +8,12 @@ import com.plus.plus.global.exception.common.BusinessException;
 import com.plus.plus.user.UserDetailsImpl;
 import com.plus.plus.user.entity.User;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ public class CommentController {
 
   private final CommentService commentService;
 
+  // 댓글 작성
   @PostMapping
   public ResponseEntity<?> createComment(
       @Valid @RequestBody CommentRequestDto requestDto,
@@ -41,5 +44,22 @@ public class CommentController {
           .body(new CommonResponseDto(be.getMessage(), be.getStatus()));
     }
   }
+
+  // 댓글 조회
+  @GetMapping
+  public ResponseEntity<?> getComments(@PathVariable Long postId) {
+
+    try {
+      List<CommentResponseDto> responseDto = commentService.getComments(postId);
+      return ResponseEntity.ok().body(responseDto);
+    } catch (BusinessException be) {
+      return ResponseEntity.status(be.getStatus())
+          .body(new CommonResponseDto(be.getMessage(), be.getStatus()));
+    }
+  }
+
+  // 댓글 수정
+
+  // 댓글 삭제
 
 }
