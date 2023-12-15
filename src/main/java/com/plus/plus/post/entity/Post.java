@@ -2,6 +2,7 @@ package com.plus.plus.post.entity;
 
 import com.plus.plus.common.Timestamped;
 import com.plus.plus.post.dto.PostRequestDto;
+import com.plus.plus.post.dto.PostUpdateRequestDto;
 import com.plus.plus.user.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,4 +47,10 @@ public class Post extends Timestamped {
     this.author = loginUser.getUsername();
     this.user = loginUser;
   }
+
+  public void update(PostUpdateRequestDto requestDto) {
+    this.title = requestDto.getTitle();
+    this.contents = requestDto.getContent();
+  }
+
 }
