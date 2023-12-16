@@ -1,6 +1,7 @@
 package com.plus.plus.like.service;
 
 import com.plus.plus.global.exception.like.DuplicatedLikeException;
+import com.plus.plus.global.exception.like.NotFoundLikeException;
 import com.plus.plus.global.exception.like.SelfLikeException;
 import com.plus.plus.like.entity.Like;
 import com.plus.plus.like.repository.LikeRepository;
@@ -33,15 +34,25 @@ public class LikeService {
       throw new SelfLikeException();
     }
 
-    // 좋아요 내역이 있는지 확인
-    if (likeRepository.findByUserAndPost(loginUser, post).isPresent()) {
-      throw new DuplicatedLikeException();
-    }
-
     Like like = Like.fromUserAndPost(loginUser, post);
     likeRepository.save(like);
     post.setLikeCount(post.getLikeCount() + 1);
     postRepository.save(post);
     return like;
   }
+
+  public void cancelLike(User loginUser, Long postId) {
+
+    Post post = postService.getPost(postId);
+
+    // 좋아요 내역이 없는지 확인
+    Like like = likeRepository.findByUserAndPost(loginUser, post)
+        .orElseThrow(NotFoundLikeException::new);
+
+    likeRepository.deleteById(like.getId());
+
+    post.setLikeCount(post.getLikeCount() - 1);
+    postRepository.save(post);
+  }
 }
+
