@@ -13,6 +13,7 @@ public class PostResponseDto {
   private String title;
   private String content;
   private String author;
+  private int likeCount;
   private LocalDateTime createdDate;
   private LocalDateTime modifiedDate;
 
@@ -21,6 +22,7 @@ public class PostResponseDto {
     this.title = savePost.getTitle();
     this.content = savePost.getContents();
     this.author = savePost.getAuthor();
+    this.likeCount = savePost.getLikeCount();
     this.createdDate = savePost.getCreatedDate();
     this.modifiedDate = savePost.getModifiedDate();
   }

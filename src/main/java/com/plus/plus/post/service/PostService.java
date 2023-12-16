@@ -60,7 +60,7 @@ public class PostService {
   }
 
   // 로그인 한 유저와 작성자가 일치하는지 확인하는 메서드
-  private void getUser(User loginUser, Post post) {
+  public void getUser(User loginUser, Post post) {
     if (!Objects.equals(loginUser.getUsername(), post.getAuthor())) {
       throw new AuthenticationMismatchException();
     }

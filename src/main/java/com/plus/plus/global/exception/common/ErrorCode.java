@@ -1,6 +1,5 @@
 package com.plus.plus.global.exception.common;
 
-import com.plus.plus.global.exception.comment.CommentNotFoundException;
 import lombok.Getter;
 
 @Getter
@@ -23,7 +22,13 @@ public enum ErrorCode {
   POST_NOT_FOUND_EXCEPTION(401, "존재하지 않는 게시글입니다."),
 
   // comment
-  COMMENT_NOT_FOUND_EXCEPTION(401, "존재하지 않는 댓글입니다.");
+  COMMENT_NOT_FOUND_EXCEPTION(401, "존재하지 않는 댓글입니다."),
+
+  // like
+  DUPLICATED_LIKE_EXCEPTION(401, "이미 좋아요 내역이 있습니다."),
+  NOT_FOUND_LIKE_EXCEPTION(401, "좋아요 내역이 없습니다."),
+  SELF_LIKE_EXCEPTION(401, "자신의 글에는 좋아요를 누를 수 없습니다.");
+
 
   private final int status;
 

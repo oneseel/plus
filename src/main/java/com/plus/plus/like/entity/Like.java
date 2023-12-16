@@ -1,12 +1,9 @@
-package com.plus.plus.comment.entity;
+package com.plus.plus.like.entity;
 
-import com.plus.plus.comment.dto.CommentRequestDto;
-import com.plus.plus.comment.dto.CommentUpdateRequestDto;
-import com.plus.plus.common.Timestamped;
 import com.plus.plus.post.entity.Post;
 import com.plus.plus.user.entity.User;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,44 +12,37 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "like_post")
 @Entity
-@Table(name = "comments")
-public class Comment extends Timestamped {
+public class Like {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private String content;
-
-  @Column(nullable = false)
-  private String author;
-
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "post_id", nullable = false)
   private Post post;
 
-  public Comment(User loginuser, CommentRequestDto requestDto, Post post) {
-    this.content = requestDto.getContent();
-    this.author = loginuser.getUsername();
-    this.user = loginuser;
-    this.post = post;
-  }
-
-  public void update(CommentUpdateRequestDto requestDto) {
-    this.content = requestDto.getContent();
+  public static Like fromUserAndPost(User user, Post post) {
+    return Like.builder()
+        .user(user)
+        .post(post)
+        .build();
   }
 }
+

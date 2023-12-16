@@ -69,6 +69,4 @@ public class CommentService {
       throw new AuthenticationMismatchException();
     }
   }
-
-
 }
