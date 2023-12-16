@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "posts")
+@Entity
+@Table(name = "posts")
 public class Post extends Timestamped {
 
   @Id
@@ -39,6 +41,9 @@ public class Post extends Timestamped {
 
   @Column(nullable = false)
   private String author;
+
+  @Column
+  private int likeCount;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
