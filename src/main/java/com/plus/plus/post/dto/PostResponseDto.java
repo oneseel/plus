@@ -1,7 +1,10 @@
 package com.plus.plus.post.dto;
 
+import com.plus.plus.comment.dto.CommentResponseDto;
 import com.plus.plus.post.entity.Post;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,6 +19,7 @@ public class PostResponseDto {
   private int likeCount;
   private LocalDateTime createdDate;
   private LocalDateTime modifiedDate;
+  private List<CommentResponseDto> comments;
 
   public PostResponseDto(Post savePost) {
     this.id = savePost.getId();
@@ -25,5 +29,8 @@ public class PostResponseDto {
     this.likeCount = savePost.getLikeCount();
     this.createdDate = savePost.getCreatedDate();
     this.modifiedDate = savePost.getModifiedDate();
+    this.comments = savePost.getComments().stream()
+        .map(CommentResponseDto::new)
+        .collect(Collectors.toList());
   }
 }
