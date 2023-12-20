@@ -11,6 +11,8 @@ import com.plus.plus.user.entity.User;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -55,10 +58,23 @@ public class PostController {
   }
 
   // 게시글 전체 조회
+//  @GetMapping
+//  public ResponseEntity<List<PostResponseDto>> getPosts() {
+//    List<PostResponseDto> responseDto = postService.getPosts();
+//    return ResponseEntity.ok(responseDto);
+//  }
+
+  // 게시글 페이징 조회
   @GetMapping
-  public ResponseEntity<List<PostResponseDto>> getPosts() {
-    List<PostResponseDto> responseDto = postService.getPosts();
-    return ResponseEntity.ok(responseDto);
+  public ResponseEntity<Page<PostResponseDto>> getPosts(
+      @RequestParam("page") int page,
+      @RequestParam("size") int size,
+      @RequestParam("sortKey") String sortKey,
+      @RequestParam("isAsc") boolean isAsc) {
+
+    Page<PostResponseDto> responseDtoPage = postService.getPosts(
+        page - 1, size, sortKey, isAsc);
+    return ResponseEntity.ok(responseDtoPage);
   }
 
   // 게시글 수정
