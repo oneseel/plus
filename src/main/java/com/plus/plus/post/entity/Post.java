@@ -5,6 +5,7 @@ import com.plus.plus.common.Timestamped;
 import com.plus.plus.post.dto.PostRequestDto;
 import com.plus.plus.post.dto.PostUpdateRequestDto;
 import com.plus.plus.user.entity.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class Post extends Timestamped {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "post")
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments;
 
   public Post(User loginUser,PostRequestDto requestDto) {

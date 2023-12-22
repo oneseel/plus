@@ -8,9 +8,12 @@ import com.plus.plus.post.dto.PostUpdateRequestDto;
 import com.plus.plus.post.entity.Post;
 import com.plus.plus.post.repository.PostRepository;
 import com.plus.plus.user.entity.User;
-import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +34,20 @@ public class PostService {
     return new PostResponseDto(post);
   }
 
-  public List<PostResponseDto> getPosts() {
-    return postRepository.findAllByOrderByCreatedDateDesc()
-        .stream().map(PostResponseDto::new).toList();
+//  public List<PostResponseDto> getPosts() {
+//    return postRepository.findAllByOrderByCreatedDateDesc()
+//        .stream().map(PostResponseDto::new).toList();
+//  }
+
+  public Page<PostResponseDto> getPosts(int page, int size, String sortKey, boolean isAsc) {
+    // 페이징 처리
+    Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+    Sort sort = Sort.by(direction, sortKey);
+    Pageable pageable = PageRequest.of(page, size, sort);
+
+    Page<Post> postList;
+    postList = postRepository.findAll(pageable);
+    return postList.map(PostResponseDto::new);
   }
 
   @Transactional
