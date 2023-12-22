@@ -48,6 +48,15 @@ public class UserService {
     userRepository.save(user);
   }
 
+  public void checkUsername(UserSignupRequestDto requestDto) {
+    String username = requestDto.getUsername();
+
+    // 유저의 중복유무
+    if (userRepository.findByUsername(username).isPresent()) {
+      throw new AlreadyExistUserException();
+    }
+  }
+
   public void login(UserLoginRequestDto requestDto) {
     String username = requestDto.getUsername();
     String password = requestDto.getPassword();
@@ -60,6 +69,4 @@ public class UserService {
       throw new UserNotFoundException();
     }
   }
-
-
 }
